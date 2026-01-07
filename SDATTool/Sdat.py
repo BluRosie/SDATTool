@@ -114,7 +114,7 @@ class SEQInfo(InfoBlock):
                 self.unkB = [None] * 2
                 for i in range(2):
                     self.unkB[i] = read_byte(sdat)
-
+                print(self.name + " uses " + self.fileName.strip(".sseq") + " uses " + self.bnk)
     def write(self, sdat):
         if self.name != "":
             append_short(sdat, sdat.names[FILE].index(self.fileName))
@@ -165,6 +165,7 @@ class BANKInfo(InfoBlock):
                 self.wa = [""] * 4
                 for i in range(4):
                     self.wa[i] = read_item_name(sdat, WAVARC)
+                print(self.name + " uses [" + self.wa[0] + ("" if self.wa[1] == "" else (", " + self.wa[1])) + ("" if self.wa[2] == "" else (", " + self.wa[2])) + ("" if self.wa[3] == "" else (", " + self.wa[3])) + "]")
         if blank:
             self.name = None
             self.fileName = None
