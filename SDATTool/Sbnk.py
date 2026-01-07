@@ -162,7 +162,7 @@ def build_sbnk(sdat, args, fName):
             if thisLine != "":
                 sbnkLines.append(thisLine)
                 if thisLine.find("\t") == -1 and thisLine.find("Unused") == -1:  # Don't count unused or sub definitions
-                    numInst += 1
+                    numInst = int(thisLine.split(", ")[0])+1 if (int(thisLine.split(", ")[0])+1 > numInst) else numInst
     sbnkHeader = []
     sbnkHeaderSize = 0x3C
     sbnkData = []

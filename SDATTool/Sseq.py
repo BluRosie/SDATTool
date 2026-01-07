@@ -182,7 +182,7 @@ def write_variable_length(length):
     return out, commandSize
 
 
-def read_sseq(sdat):
+def read_sseq(sdat, instrList):
     sseqSize = read_long(sdat, pos=sdat.pos + 0x8)
     sseqEnd = sdat.pos + sseqSize
     sdat.pos += 0x1C
@@ -267,6 +267,9 @@ def read_sseq(sdat):
                     location += commandArg
             sdat.pos += commandArgLen
             seq.size = (sdat.pos - sseqOffset)
+            if (command == 0x81):
+                #print(f"{command:02x}: {commandName} {commandArg}")
+                instrList.append(commandArg)
         else:
             commandArgLen = 1
             commandArg = 0

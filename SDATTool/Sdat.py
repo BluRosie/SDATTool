@@ -541,8 +541,11 @@ def unpack_fileBlock(sdat, args):
         elif fileHeader == b'SBNK':
             unpack_sbnk(sdat, tempPath)
         elif fileHeader == b'SSEQ':
-            if not write_sseq_to_midi(read_sseq(sdat), args, tempName):
+            print(f"File: {tempName}.smft")
+            instrList = []
+            if not write_sseq_to_midi(read_sseq(sdat, instrList), args, tempName):
                 fileHeader = b'PASS'  # aborted conversion, dump the raw file
+            print(f"Program Numbers: {list(dict.fromkeys(instrList))}\n")
         if args.writeRaw or (fileHeader not in [b'SWAR', b'SBNK', b'SSEQ']):
             with open(tempPath + tempExt, "wb") as outfile:
                 outfile.write(sdat.data[sdat.pos:(sdat.pos + tempSize)])
